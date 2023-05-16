@@ -2,7 +2,7 @@
 #include "BluetoothSerial.h"
 BluetoothSerial SerialBT;
 
-String name = "Naoya's M5StickC"; // デバイス名を設定
+String name = "Naoya's M5StickC"; // デバイス名を設定，適宜変更
 
 void setup() {
     M5.begin();  // M5StickCの初期化
@@ -15,7 +15,7 @@ void setup() {
     Serial.begin(115200);
 
     // Bluetooth接続開始
-    SerialBT.begin(name); // 接続名を指定して初期化。第2引数にtrueを書くとマスター、省略かfalseでスレーブ
+    SerialBT.begin(name); // 接続名を指定して初期化。
     // MACアドレスの取得と表示
     uint8_t macBT[6];
     esp_read_mac(macBT, ESP_MAC_BT);  // MACアドレス取得

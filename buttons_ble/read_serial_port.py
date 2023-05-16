@@ -1,7 +1,7 @@
 import serial
 import time
 
-with serial.Serial('COM5', 115200, timeout=1) as ser:
+with serial.Serial('COM6', 115200, timeout=1) as ser:
     print("start")
     while True:
         try:
