@@ -37,11 +37,11 @@ void setup() {
 void loop() {
 
     M5.Lcd.fillScreen(BLACK);
-    M5.Lcd.setTextColor(GREEN);
+    // M5.Lcd.setTextColor(GREEN);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println("Measuring");
     M5.Lcd.println("Acc");
-    Serial.println("start");
+    
     t_start = micros();
 
     for(int i=0; i<N; i++){
@@ -79,6 +79,9 @@ void loop() {
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println("Sending");
     M5.Lcd.println("Data");
+
+    Serial.println("start");
+    
     for(int i=0; i<N; i++){
 
         Serial.printf("%d %6.5f %6.5f %6.5f\n", 
@@ -89,6 +92,11 @@ void loop() {
     }
     Serial.println("end");
 
+    M5.Lcd.fillScreen(BLACK);
+    // M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.setCursor(0, 0);
+    M5.Lcd.println("MPU6886");
+    M5.Lcd.println("+-2G");
 
 
     delay(3000);
