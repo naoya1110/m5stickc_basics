@@ -1,6 +1,6 @@
 #include <M5StickC.h>
 
-int LED = GPIO_NUM_10;  // LEDのピン番号，赤10 or 赤外9
+int LED = GPIO_NUM_9;  // LEDのピン番号，赤10 or 赤外9
 
 void setup(){
   M5.begin();
