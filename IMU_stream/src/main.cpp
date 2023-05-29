@@ -46,7 +46,8 @@ void loop() {
 
     for(int i=0; i<N; i++){
         // IMUのデータを取得
-        M5.IMU.getAccelData(&accX, &accY, &accZ);       // 加速度
+        // M5.IMU.getAccelData(&accX, &accY, &accZ);       // 加速度
+        M5.Mpu6886.getAccelData(&accX,&accY,&accZ);
         // M5.IMU.getGyroData(&gyroX, &gyroY, &gyroZ);     // 角速度
         t_now = micros();
         dt = t_now - t_start;
