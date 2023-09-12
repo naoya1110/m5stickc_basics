@@ -1,6 +1,6 @@
 #include <M5StickC.h>
 
-const int N = 4000;
+const int N = 2000;
 float accX = 0.0F;
 float accY = 0.0F;
 float accZ = 0.0F;
@@ -16,16 +16,29 @@ unsigned long t_start = 0;
 unsigned long dt = 0;
 
 
-
 // float gyroX = 0.0F;
 // float gyroY = 0.0F;
 // float gyroZ = 0.0F;
 
+//レジスタ書き込み用関数
+void I2C_Write_NBytes(uint8_t driver_Addr, uint8_t start_Addr, uint8_t number_Bytes, uint8_t *write_Buffer){
+    Wire1.beginTransmission(driver_Addr);
+    Wire1.write(start_Addr);
+    Wire1.write(*write_Buffer);
+    Wire1.endTransmission();
+}
 
 void setup() {
     M5.begin();             // M5stickCの初期化
-    M5.IMU.Init();          // IMUセンサの初期化
+    M5.Mpu6886.Init();          // IMUセンサの初期化
+    
+    Wire1.setClock(100000);      // オンボードデバイスのI2C通信速度設定 デフォルト100k
+
+    unsigned char regdata = 0x00;                             //次行で設定するレジスタ設定値
+    I2C_Write_NBytes(MPU6886_ADDRESS,0x19,1,&regdata);        //レジスタ0x19,SAMPLE LATE DIVIDERに設定値を書き込み
+    
     M5.Mpu6886.SetAccelFsr(M5.Mpu6886.AFS_2G);
+
     M5.Lcd.setRotation(3);
     M5.Lcd.setTextFont(4);
     M5.Lcd.setTextColor(BLUE);
@@ -37,7 +50,7 @@ void setup() {
 void loop() {
 
     M5.Lcd.fillScreen(BLACK);
-    // M5.Lcd.setTextColor(GREEN);
+    M5.Lcd.setTextColor(RED);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println("Measuring");
     M5.Lcd.println("Acc");
@@ -51,14 +64,11 @@ void loop() {
         // M5.IMU.getGyroData(&gyroX, &gyroY, &gyroZ);     // 角速度
         t_now = micros();
         dt = t_now - t_start;
-        
-        
+                
         accX_list[i]=accX;
         accY_list[i]=accY;
         accZ_list[i]=accZ;
         t_list[i]=dt;
-
-
     }
 
 
@@ -76,7 +86,7 @@ void loop() {
 
 
     M5.Lcd.fillScreen(BLACK);
-    M5.Lcd.setTextColor(BLUE);
+    M5.Lcd.setTextColor(GREEN);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println("Sending");
     M5.Lcd.println("Data");
@@ -94,7 +104,7 @@ void loop() {
     Serial.println("end");
 
     M5.Lcd.fillScreen(BLACK);
-    // M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.setTextColor(BLUE);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println("MPU6886");
     M5.Lcd.println("+-2G");

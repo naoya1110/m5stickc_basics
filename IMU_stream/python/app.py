@@ -50,7 +50,7 @@ def draw_figure(ax_acc, ax_fft, t_list, accX_list, accY_list, accZ_list):
     
     ax_fft.grid(True)
     ax_fft.legend(loc=4)
-    #ax_fft.set_xlim(0, max(t_list))
+    ax_fft.set_ylim(1E-6, 1E-1)
 
     ax_fft.set_yscale("log")
     ax_fft.set_ylabel("Acceleration (G)")
@@ -73,8 +73,8 @@ def main(page: ft.page):
     if not os.path.exists(DIR):
         os.makedirs(DIR)
 
-    fig = plt.figure(figsize=(8, 8))        # グラフのサイズを指定
-    plt.rcParams["font.size"] = 10    # フォントサイズ
+    fig = plt.figure(figsize=(20, 8))        # グラフのサイズを指定
+    plt.rcParams["font.size"] = 16    # フォントサイズ
     plt.tight_layout()
     ax_acc = fig.add_subplot(2, 1, 1)
     ax_fft = fig.add_subplot(2, 1, 2)
